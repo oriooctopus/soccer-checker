@@ -1,7 +1,10 @@
 const { chromium } = require('playwright');
+const fs = require('fs');
+const path = require('path');
 
 class YouTubeSearchAgent {
     constructor() {
+        this.teams = this.loadTeams();
         this.preferredChannels = [
             'CBS Sports Golazo',
             'Peacock Sports',
@@ -19,22 +22,37 @@ class YouTubeSearchAgent {
         ];
     }
 
+    loadTeams() {
+        try {
+            const teamsPath = path.join(__dirname, 'teams.json');
+            const teamsData = fs.readFileSync(teamsPath, 'utf8');
+            return JSON.parse(teamsData);
+        } catch (error) {
+            console.error('Error loading teams data:', error);
+            return {};
+        }
+    }
+
+    containsFootballTeam(title) {
+        const lowerTitle = title.toLowerCase();
+        
+        // Check all teams across all leagues
+        for (const league in this.teams) {
+            for (const team of this.teams[league]) {
+                if (lowerTitle.includes(team.toLowerCase())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     async searchHighlights(query, maxResults = 20, days = null) {
         const browser = await chromium.launch({ headless: true });
         const page = await browser.newPage();
         
         try {
-            let url = 'https://www.youtube.com/results?search_query=' + encodeURIComponent(query);
-            
-            if (days) {
-                if (days === 1) {
-                    url += '&sp=EgIIAg%253D%253D';
-                } else if (days <= 7) {
-                    url += '&sp=EgIIAw%253D%253D';
-                } else if (days <= 30) {
-                    url += '&sp=EgIIBA%253D%253D';
-                }
-            }
+            const url = 'https://www.youtube.com/results?search_query=' + encodeURIComponent(query);
             
             await page.goto(url);
             
@@ -197,7 +215,9 @@ class YouTubeSearchAgent {
             
             const containsTeam = !teamName || lowerTitle.includes(teamName.toLowerCase());
             
-            return !hasScore && !isLiveOrUpcoming && hasHighlights && withinDateRange && !isGameSimulation && containsTeam;
+            const isFootballContent = this.containsFootballTeam(video.title);
+            
+            return !hasScore && !isLiveOrUpcoming && hasHighlights && withinDateRange && !isGameSimulation && containsTeam && isFootballContent;
         });
     }
 

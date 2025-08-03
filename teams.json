@@ -1,0 +1,17 @@
+{
+  "premiere": [
+    "Arsenal", "Aston Villa", "Bournemouth", "Brentford", "Brighton", "Brighton & Hove Albion", "Chelsea", "Crystal Palace", "Everton", "Fulham", "Ipswich Town", "Leicester City", "Liverpool", "Manchester City", "Manchester United", "Newcastle United", "Nottingham Forest", "Southampton", "Tottenham", "Tottenham Hotspur", "West Ham United", "Wolverhampton Wanderers", "Wolves"
+  ],
+  "laliga": [
+    "Athletic Bilbao", "Atlético Madrid", "Barcelona", "Real Madrid", "Celta Vigo", "Deportivo Alavés", "Espanyol", "Getafe", "Girona", "Las Palmas", "Leganés", "Mallorca", "Osasuna", "Rayo Vallecano", "Real Betis", "Real Sociedad", "Sevilla", "Valencia", "Valladolid", "Villarreal"
+  ],
+  "ligue1": [
+    "AS Monaco", "Monaco", "Angers", "Auxerre", "Brest", "Le Havre", "Lens", "Lille", "Lyon", "Marseille", "Montpellier", "Nantes", "Nice", "Paris Saint-Germain", "PSG", "Reims", "Rennes", "Saint-Étienne", "Strasbourg", "Toulouse"
+  ],
+  "bundesliga": [
+    "Augsburg", "Bayer Leverkusen", "Bayern Munich", "Borussia Dortmund", "Borussia Mönchengladbach", "Eintracht Frankfurt", "Freiburg", "Heidenheim", "Hoffenheim", "Holstein Kiel", "Mainz", "RB Leipzig", "St. Pauli", "Union Berlin", "VfB Stuttgart", "VfL Bochum", "VfL Wolfsburg", "Werder Bremen"
+  ],
+  "seriea": [
+    "AC Milan", "Milan", "Atalanta", "Bologna", "Cagliari", "Como", "Empoli", "Fiorentina", "Genoa", "Hellas Verona", "Inter Milan", "Inter", "Juventus", "Lazio", "Lecce", "Monza", "Napoli", "Parma", "Roma", "Torino", "Udinese", "Venezia"
+  ]
+}
