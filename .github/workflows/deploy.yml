@@ -79,12 +79,13 @@ jobs:
         
     - name: Copy web files to build directory
       run: |
-        cp -r web/* ./
+        mkdir -p _site
+        cp -r web/* _site/
         
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
       with:
-        path: ./
+        path: _site
 
   deploy:
     environment:
