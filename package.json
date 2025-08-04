@@ -5,7 +5,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "search": "node cli.js",
+    "upcoming": "node upcoming-cli.js",
     "example": "node example.js"
+  },
+  "bin": {
+    "highlights-search": "./cli.js",
+    "highlights-upcoming": "./upcoming-cli.js"
   },
   "keywords": [],
   "author": "",
