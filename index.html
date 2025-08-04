@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football Hub - Highlights & Fixtures</title>
+    <meta name="description" content="Find spoiler-free football highlights and upcoming fixtures">
+    <meta name="theme-color" content="#2563eb">
+    
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Football App">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app">
+        <header class="header">
+            <h1>⚽ Football Hub</h1>
+            <p>Spoiler-free highlights & fixtures</p>
+        </header>
+
+        <main class="main">
+            <!-- Tab Navigation -->
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="highlights">
+                    🎥 Highlights
+                </button>
+                <button class="tab-btn" data-tab="fixtures">
+                    📅 Fixtures
+                </button>
+            </div>
+
+            <!-- Highlights Tab -->
+            <div class="tab-content active" id="highlights">
+                <div class="search-form">
+                    <div class="form-group">
+                        <label for="highlights-team">Team (optional)</label>
+                        <input type="text" id="highlights-team" placeholder="e.g. Arsenal, Brighton">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="highlights-league">League</label>
+                            <select id="highlights-league">
+                                <option value="premiere">Premier League</option>
+                                <option value="laliga">La Liga</option>
+                                <option value="bundesliga">Bundesliga</option>
+                                <option value="seriea">Serie A</option>
+                                <option value="ligue1">Ligue 1</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="highlights-days">Days back</label>
+                            <select id="highlights-days">
+                                <option value="1">1 day</option>
+                                <option value="3" selected>3 days</option>
+                                <option value="7">1 week</option>
+                                <option value="14">2 weeks</option>
+                                <option value="30">1 month</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button class="search-btn" onclick="searchHighlights()">
+                        🔍 Search Highlights
+                    </button>
+                </div>
+
+                <div class="results" id="highlights-results">
+                    <div class="welcome-message">
+                        <p>👋 Search for spoiler-free football highlights above!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fixtures Tab -->
+            <div class="tab-content" id="fixtures">
+                <div class="search-form">
+                    <div class="form-group">
+                        <label for="fixtures-team">Team (optional)</label>
+                        <input type="text" id="fixtures-team" placeholder="e.g. Arsenal, Brighton">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fixtures-league">League</label>
+                            <select id="fixtures-league">
+                                <option value="premiere">Premier League</option>
+                                <option value="laliga">La Liga</option>
+                                <option value="bundesliga">Bundesliga</option>
+                                <option value="seriea">Serie A</option>
+                                <option value="ligue1">Ligue 1</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="fixtures-days">Days ahead</label>
+                            <select id="fixtures-days">
+                                <option value="7" selected>1 week</option>
+                                <option value="14">2 weeks</option>
+                                <option value="30">1 month</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button class="search-btn" onclick="searchFixtures()">
+                        📅 Get Fixtures
+                    </button>
+                </div>
+
+                <div class="results" id="fixtures-results">
+                    <div class="welcome-message">
+                        <p>👋 Get upcoming football fixtures above!</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>Made with ⚽ for football fans</p>
+        </footer>
+    </div>
+
+    <script src="api.js"></script>
+    <script src="app.js"></script>
+    <script>
+        // Register service worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(registration => console.log('SW registered'))
+                    .catch(error => console.log('SW registration failed'));
+            });
+        }
+    </script>
+</body>
+</html>
