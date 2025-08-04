@@ -1,0 +1,98 @@
+name: Deploy PWA to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Setup Pages
+      uses: actions/configure-pages@v4
+      
+    - name: Generate fixtures data
+      run: |
+        # Create data directory
+        mkdir -p web/data
+        
+        # Generate fixtures for the next 30 days
+        node -e "
+        const ScheduleAgent = require('./schedule-agent.js');
+        const agent = new ScheduleAgent();
+        
+        async function generateData() {
+          console.log('Generating fixtures data...');
+          
+          const leagues = ['premiere', 'laliga', 'bundesliga', 'seriea', 'ligue1'];
+          const allData = {};
+          
+          for (const league of leagues) {
+            try {
+              const fixtures = await agent.getFixtures(league, null, 30, 1);
+              allData[league] = fixtures;
+              console.log(\`Generated \${fixtures.length} fixtures for \${league}\`);
+            } catch (error) {
+              console.error(\`Error fetching \${league}:\`, error.message);
+              allData[league] = [];
+            }
+            
+            // Add delay to avoid rate limiting
+            await new Promise(resolve => setTimeout(resolve, 1000));
+          }
+          
+          // Write to static JSON file
+          require('fs').writeFileSync(
+            'web/data/fixtures.json', 
+            JSON.stringify(allData, null, 2)
+          );
+          
+          console.log('Fixtures data generated successfully');
+        }
+        
+        generateData().catch(console.error);
+        "
+        
+    - name: Copy web files to build directory
+      run: |
+        cp -r web/* ./
+        
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: ./
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
