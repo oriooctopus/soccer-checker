@@ -55,13 +55,15 @@
                         </div>
                         <div class="form-group">
                             <label for="highlights-days">Days back</label>
-                            <select id="highlights-days">
-                                <option value="1">1 day</option>
-                                <option value="3" selected>3 days</option>
-                                <option value="7">1 week</option>
-                                <option value="14">2 weeks</option>
-                                <option value="30">1 month</option>
-                            </select>
+                            <div class="days-input">
+                                <input type="number" id="highlights-days" value="3" min="1" max="365" placeholder="Days">
+                                <div class="quick-days">
+                                    <button type="button" onclick="setDays('highlights-days', 1)">1d</button>
+                                    <button type="button" onclick="setDays('highlights-days', 3)">3d</button>
+                                    <button type="button" onclick="setDays('highlights-days', 7)">7d</button>
+                                    <button type="button" onclick="setDays('highlights-days', 30)">30d</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -98,11 +100,14 @@
                         </div>
                         <div class="form-group">
                             <label for="fixtures-days">Days ahead</label>
-                            <select id="fixtures-days">
-                                <option value="7" selected>1 week</option>
-                                <option value="14">2 weeks</option>
-                                <option value="30">1 month</option>
-                            </select>
+                            <div class="days-input">
+                                <input type="number" id="fixtures-days" value="7" min="1" max="365" placeholder="Days">
+                                <div class="quick-days">
+                                    <button type="button" onclick="setDays('fixtures-days', 7)">7d</button>
+                                    <button type="button" onclick="setDays('fixtures-days', 14)">14d</button>
+                                    <button type="button" onclick="setDays('fixtures-days', 30)">30d</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -126,6 +131,13 @@
 
     <script src="api.js"></script>
     <script src="app.js"></script>
+    <script>
+        // Helper function for quick day selection
+        function setDays(elementId, days) {
+            document.getElementById(elementId).value = days;
+            savePreferences();
+        }
+    </script>
     <script>
         // Register service worker
         if ('serviceWorker' in navigator) {

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate Icons</title>
+</head>
+<body>
+    <canvas id="canvas" width="512" height="512" style="border: 1px solid #ccc;"></canvas>
+    
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        function generateIcon(size) {
+            // Clear canvas
+            ctx.clearRect(0, 0, 512, 512);
+            
+            // Background
+            ctx.fillStyle = '#2563eb';
+            ctx.fillRect(0, 0, 512, 512);
+            
+            // Football
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(256, 256, 120, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Simple football pattern
+            ctx.strokeStyle = '#2563eb';
+            ctx.lineWidth = 6;
+            ctx.beginPath();
+            
+            // Vertical line
+            ctx.moveTo(256, 136);
+            ctx.lineTo(256, 376);
+            
+            // Horizontal line
+            ctx.moveTo(136, 256);
+            ctx.lineTo(376, 256);
+            
+            // Diagonal lines
+            ctx.moveTo(180, 180);
+            ctx.lineTo(332, 332);
+            
+            ctx.moveTo(332, 180);
+            ctx.lineTo(180, 332);
+            
+            ctx.stroke();
+            
+            // Pentagon in center
+            ctx.fillStyle = '#2563eb';
+            ctx.beginPath();
+            ctx.moveTo(256, 220);
+            ctx.lineTo(276, 240);
+            ctx.lineTo(268, 268);
+            ctx.lineTo(244, 268);
+            ctx.lineTo(236, 240);
+            ctx.closePath();
+            ctx.fill();
+            
+            // Download the image
+            canvas.toBlob((blob) => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `icon-${size}x${size}.png`;
+                a.click();
+                URL.revokeObjectURL(url);
+            });
+        }
+        
+        // Generate all sizes
+        const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+        
+        let currentIndex = 0;
+        function generateNext() {
+            if (currentIndex < sizes.length) {
+                const size = sizes[currentIndex];
+                generateIcon(size);
+                currentIndex++;
+                setTimeout(generateNext, 1000); // Wait 1 second between downloads
+            }
+        }
+        
+        // Start generation after 2 seconds
+        setTimeout(generateNext, 2000);
+        
+        document.body.innerHTML += '<p>Icons will be downloaded automatically in 2 seconds...</p>';
+    </script>
+</body>
+</html>

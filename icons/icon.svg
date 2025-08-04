@@ -1,0 +1,23 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="512" height="512" fill="#2563eb" rx="64"/>
+  
+  <!-- Football -->
+  <circle cx="256" cy="256" r="120" fill="white"/>
+  
+  <!-- Football pattern -->
+  <g stroke="#2563eb" stroke-width="4" fill="none">
+    <!-- Pentagon center -->
+    <polygon points="256,180 280,220 260,260 252,260 236,220"/>
+    
+    <!-- Hexagons around -->
+    <polygon points="256,180 280,220 320,200 320,160 280,140 256,180"/>
+    <polygon points="280,220 260,260 300,300 340,280 320,240 280,220"/>
+    <polygon points="236,220 252,260 212,300 172,280 192,240 236,220"/>
+    <polygon points="256,180 236,220 192,240 192,200 236,180 256,180"/>
+    <polygon points="252,260 260,260 300,300 260,340 220,340 212,300 252,260"/>
+  </g>
+  
+  <!-- Highlight accent -->
+  <circle cx="220" cy="200" r="8" fill="#60a5fa" opacity="0.7"/>
+</svg>
